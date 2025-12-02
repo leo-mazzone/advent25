@@ -5,7 +5,7 @@
 
 int main() {
     FILE* fptr;
-    fptr = fopen("day1.txt", "r");
+    fptr = fopen("inputs/day1.txt", "r");
     if (fptr == NULL) printf("Input could not be opened.");
 
     char command[1+MAX_MOVEMENT_DIGITS+1];
