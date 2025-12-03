@@ -12,7 +12,7 @@ int count_digits(long n) {
     return count;
 }
 
-void checkNumber(long n, long *sum) {
+void check_number(long n, long *sum) {
     int num_digits = count_digits(n);
     int max_pattern_len = num_digits / 2;
     for (int pattern_len=1; pattern_len<=max_pattern_len; pattern_len++) {
@@ -30,11 +30,17 @@ void checkNumber(long n, long *sum) {
 
         // Calculate the multiplier: 10^(pattern_len * (n-1)) + ... + 10^pattern_len + 1
         // This is a geometric series: (10^(pattern_len * num_reps) - 1) / (10^pattern_len - 1)
+
+        // The base is a power of 10 with as many zeroes as the length of the pattern
         long base = 1;
         for (int i = 0; i < pattern_len; i++) {
             base *= 10;
         }
 
+        // The multiplier is a sum of powers of 10, with a 1 for each position in the number
+        // where we need to place our pattern. We start from 1 (the least significant or right-most
+        // appearance of the pattern), and then use the base to add enough 0s to move to the next
+        // slot for our pattern
         long multiplier = 0;
         long power = 1;
         for (int i = 0; i < num_reps; i++) {
@@ -56,13 +62,13 @@ void checkNumber(long n, long *sum) {
 void checkRange(long left, long right, long *sum) {
     printf("%ld - %ld \n", left, right);
     for (long i=left; i<=right; i++) {
-        checkNumber(i, sum);
+        check_number(i, sum);
     }
 }
 
 int main() {
     FILE* fptr;
-    fptr = fopen("inputs/day2s.txt", "r");
+    fptr = fopen("inputs/day2.txt", "r");
     int c;
 
     int n_digits = 0;
