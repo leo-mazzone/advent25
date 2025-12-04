@@ -16,8 +16,7 @@ void process_line(char* buffer, int n_cols, int* n_rows, int** grid, int** next_
 }
 
 int valid_coordinates(int r, int c, int n_rows, int n_cols) {
-    if ((r < 0) || (c < 0) || (r >= n_rows) || (c >= n_cols)) return 0;
-    return 1;
+    return r >= 0 && c >= 0 && r < n_rows && c < n_cols;
 }
 
 int remove_paper(int n_rows, int n_cols, int** grid, int** next_grid) {
@@ -65,6 +64,8 @@ int main() {
     while (fgets(buffer, sizeof(buffer), fptr)) {
         process_line(buffer, n_cols, &n_rows, grid, next_grid);
     }
+    fclose(fptr);
+
     // Print grid for sense-checking
     for (int r=0; r<n_rows; r++) {
         for (int c=0; c<n_cols; c++) {
@@ -92,7 +93,6 @@ int main() {
         free(grid[i]);
         free(next_grid[i]);
     }
-    fclose(fptr);
 
     return 0;
 }
