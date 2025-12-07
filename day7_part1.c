@@ -2,7 +2,7 @@
 #define MAX_LINE_LEN 1000
 
 int main() {
-    FILE* fptr = fopen("inputs/day7s.txt", "r");
+    FILE* fptr = fopen("inputs/day7.txt", "r");
 
     char line[MAX_LINE_LEN];
     int beams[MAX_LINE_LEN];
