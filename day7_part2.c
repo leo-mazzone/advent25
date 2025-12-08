@@ -36,7 +36,7 @@ int main() {
                 if (i-1 >= 0 && line[i-1] == '^') {
                     split_left = beams_ptr[i-1];
                 }
-                if (i+1 >= 0 && line[i+1] == '^') {
+                if (i+1 < line_len && line[i+1] == '^') {
                     split_right = beams_ptr[i+1];
                 }
                 // Each position keeps track of how many timelines have a
