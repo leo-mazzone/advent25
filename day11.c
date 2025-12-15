@@ -63,6 +63,14 @@ void node_add_child(Node *from, Node *to) {
     from->child = e;
 }
 
+void node_count_paths(Node *n) {
+    Edge *e = n->child;
+    while (e) {
+        e->dest->ways += n->ways;
+        e = e->next;
+    }
+}
+
 //------------ Hash map ------------
 
 // djb2 hash by Daniel J. Bernstein
@@ -112,16 +120,12 @@ void dfs_visit(Node *node, Node **last_node) {
     *last_node = node;
 }
 
-Node *topological_sort(Node **all_nodes, int node_count) {
+void topological_sort(Node *start) {
+    // Used to track node at the bottom of the stack
     Node *null_node = NULL;
     Node **last_node = &null_node;
-    // Visit all unvisited nodes in depth-first fashion
-    for (int i = 0; i < node_count; i++) {
-        if (!all_nodes[i]->visited)
-            dfs_visit(all_nodes[i], last_node);
-    }
 
-    return *last_node;
+    dfs_visit(start, last_node);
 }
 
 
@@ -134,7 +138,7 @@ int main() {
     Node *all_nodes[MAX_NODES];
     int node_count = 0;
 
-    FILE* fptr = fopen("inputs/day11s.txt", "r");
+    FILE* fptr = fopen("inputs/day11.txt", "r");
     char line[MAX_LINE_LENGTH];
     // Read input; map names to indices; create adjacency lists
     while (fgets(line, sizeof(line), fptr)) {
@@ -174,11 +178,17 @@ int main() {
         printf("\n");
     }
 
-    Node *n = topological_sort(all_nodes, node_count);
+    Node *n = all_nodes[hash_name_to_i(hash_table, "you", all_nodes, &node_count)];
+    topological_sort(n);
+    n->ways = 1;
     while (n) {
-        printf("Visiting %s\n", n->name);
+        node_count_paths(n);
         n = n->topological_next;
     }
+
+    Node *out = all_nodes[hash_name_to_i(hash_table, "out", all_nodes, &node_count)];
+
+    printf("Solution: %d\n", out->ways);
 
     // Clean up
     for (int i = 0; i < node_count; i++) {
