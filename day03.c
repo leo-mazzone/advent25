@@ -1,4 +1,5 @@
 #include <stdio.h>
+
 #define MAX_BLOCK_SIZE 1000
 #define ROUNDS 12
 
@@ -56,7 +57,7 @@ int main() {
     }
 
 
-    printf("Solution: %ld\n", solution);
+    printf("Solution 2: %ld\n", solution);
 
     fclose(fptr);
 

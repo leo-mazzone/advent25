@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+
 #define MAX_DIGITS 100
 
 int count_digits(long n) {
@@ -59,7 +60,7 @@ void check_number(long n, long *sum) {
     }
 }
 
-void checkRange(long left, long right, long *sum) {
+void check_range(long left, long right, long *sum) {
     printf("%ld - %ld \n", left, right);
     for (long i=left; i<=right; i++) {
         check_number(i, sum);
@@ -88,7 +89,7 @@ int main() {
         } else if (cc == ',') {
             buffer[n_digits] = 0;
             right = atol(buffer);
-            checkRange(left, right, &sum);
+            check_range(left, right, &sum);
             n_digits = 0;
         } else {
             buffer[n_digits] = cc;
@@ -97,8 +98,8 @@ int main() {
     }
     buffer[n_digits] = 0;
     right = atol(buffer);
-    checkRange(left, right, &sum);
+    check_range(left, right, &sum);
 
-    printf("The solution is %ld\n", sum);
+    printf("Solution 2: %ld\n", sum);
     return 0;
 }

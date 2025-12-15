@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+
 #define WHEEL_LEN 100
 #define MAX_MOVEMENT_DIGITS 4
 
@@ -40,7 +41,7 @@ int main() {
 
     fclose(fptr);
 
-    printf("%d\n", zero_counter);
+    printf("Solution 2: %d\n", zero_counter);
 
 
     return 0;

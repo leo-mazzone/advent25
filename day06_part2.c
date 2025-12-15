@@ -2,6 +2,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
+
 #define MAX_LINE_LEN 10000
 #define MAX_LINES 1000
 
