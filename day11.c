@@ -17,6 +17,7 @@ typedef struct Edge {
 
 typedef struct Node {
     int index;
+    int visited;
     char name[MAX_NAME_LEN];
     struct Node *hash_next; // linked list for nodes in same hash bucket
     struct Node *topological_next; // linked list for topological order
@@ -28,6 +29,7 @@ typedef struct Node {
 Node *node_create(int i, const char *name) {
     Node *new_node = malloc(sizeof(Node));
     new_node->index = i;
+    new_node->visited = 0;
 
     strncpy(new_node->name, name, MAX_NAME_LEN-1);
     new_node->name[MAX_NAME_LEN-1] = '\0'; // The line above pads the rest
@@ -93,6 +95,35 @@ int hash_name_to_i(Node **hash_table, const char *name, Node **all_nodes, int *n
     return new_node->index;
 }
 
+//------------ Graph exploration ------------
+
+
+void dfs_visit(Node *node, Node **last_node) {
+    node->visited = 1;
+    // Visit all unvisited children
+    Edge *child = node->child;
+    while (child) {
+        if (!child->dest->visited)
+            dfs_visit(child->dest, last_node);
+        child = child->next;
+    }
+    // Add to topological order
+    node->topological_next = *last_node;
+    *last_node = node;
+}
+
+Node *topological_sort(Node **all_nodes, int node_count) {
+    Node *null_node = NULL;
+    Node **last_node = &null_node;
+    // Visit all unvisited nodes in depth-first fashion
+    for (int i = 0; i < node_count; i++) {
+        if (!all_nodes[i]->visited)
+            dfs_visit(all_nodes[i], last_node);
+    }
+
+    return *last_node;
+}
+
 
 int main() {
     Node *hash_table[HASH_SIZE];
@@ -141,6 +172,12 @@ int main() {
             next_child = next_child->next;
         }
         printf("\n");
+    }
+
+    Node *n = topological_sort(all_nodes, node_count);
+    while (n) {
+        printf("Visiting %s\n", n->name);
+        n = n->topological_next;
     }
 
     // Clean up
