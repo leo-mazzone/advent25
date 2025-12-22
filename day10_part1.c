@@ -200,6 +200,7 @@ int main() {
     while (fgets(line, sizeof(line), fptr)) {
         int result = process_line(line, &n_lights, &n_buttons, lights, wiring, joltage);
         if (result > 0) total += result; // Currently ignores -1s
+    }
 
     printf("\nSolution: %d\n", total);
 
