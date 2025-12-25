@@ -78,4 +78,6 @@ We are given a directed graph. We are asked to count the number of paths:
 - (**Part 2**) From a start to an end node through other two nodes. Reused algorithm for part 1, by counting paths between each pair of nodes to reach.
 
 ### Day 12
-Not yet solved
+Only one part. Given a set of different shapes on a 2D grid; also given, on each line, a 2D board, and a number of desired shapes of each kind to place. The problem was to count how many of those lines could be satisfied, if one found just the right way to fit the desired shapes by translating them, flipping them and rotating them.
+
+Solved using a recursive search and pruning the search space by ignoring different ways of producing identical results on the grid.
